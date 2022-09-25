@@ -14,7 +14,7 @@ TARGET := utest
 
 all: $(TARGET)
 
-$(SOURCE) : $(INCLUDES_DIR)/mu_test.h
+$(SOURCE) : classes_under_test.hpp $(INCLUDES_DIR)/mu_test.h
 
 check : $(TARGET)
 	@./$(TARGET) -v
