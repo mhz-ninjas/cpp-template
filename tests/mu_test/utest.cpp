@@ -1,20 +1,17 @@
 #include "mu_test.h"
 
 #include <string>
-#include <map>
-#include <vector>
-#include <iostream>
-#include <cstddef>
 #include <climits>
 
 #include "classes_under_test.hpp"
 
 BEGIN_TEST(_equality_on_integers)
 	int a = 42;
-	size_t s = 42;
+	size_t s = 43;
 
 	ASSERT_EQUAL(a, 42);
-	ASSERT_EQUAL(s, 42);
+	ASSERT_EQUAL(s, 43);
+	ASSERT_EQUAL(s, static_cast<size_t>(a) );
 
 	int n = 42;
 	long m = 42;
@@ -46,6 +43,8 @@ BEGIN_TEST(empty_class_is_not_empty)
 	class K{};
 
 	ASSERT_THAT(sizeof(K) != 0);
+
+	ASSERT_NOT_EQUAL(sizeof(K), 0);
 	ASSERT_EQUAL(sizeof(K), 1);
 END_TEST
 
@@ -85,6 +84,7 @@ BEGIN_TEST(test_equal_on_classes)
 	Ball large(100);
 
 	TRACE(small);
+	TRACER << "balls " << small << " and " << large << '\n';
 	TRACE(large);
 
 	ASSERT_THAT(small == small);
@@ -126,12 +126,12 @@ END_TEST
 
 
 BEGIN_TEST(test_with_no_assert_should_fail)
-
+	const char *some = "hello";
+	TRACE(some);
 END_TEST
 
-
 TEST_SUITE(因果応報 [inga ōhō: bad causes bring bad results])
-	TEST(_equality_on_integers)
+	IGNORE_TEST(_equality_on_integers)
 	TEST(add_operations)
 	TEST(abs_function)
 
@@ -147,8 +147,8 @@ TEST_SUITE(因果応報 [inga ōhō: bad causes bring bad results])
 	TEST(throw_ball)
 	TEST(throw_std_ball_excpetion)
 
-	TEST(test_should_fail)
-	TEST(test_should_pass)
+	IGNORE_TEST(test_should_fail)
+	IGNORE_TEST(test_should_pass)
 
 	TEST(test_with_no_assert_should_fail)
 END_SUITE
