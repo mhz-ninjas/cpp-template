@@ -1,4 +1,4 @@
-CXX= clang++
+CXX= g++
 CC = $(CXX)
 
 CXXFLAGS  = -pedantic -Wall -Werror -Wextra
@@ -20,6 +20,9 @@ check : $(TARGET)
 	@./$(TARGET) -v
 
 recheck: clean check
+
+clang_check: CXX = clang++
+clang_check: check
 
 clean:
 	@$(RM) ./$(TARGET) $(OBJS)
