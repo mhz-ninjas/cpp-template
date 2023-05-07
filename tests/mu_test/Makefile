@@ -1,6 +1,9 @@
-CFLAGS = -pedantic -Wall -Werror
-CFLAGS += -g
-CXXFLAGS = $(CFLAGS) -std=c++03
+CXX= clang++
+CC = $(CXX)
+
+CXXFLAGS  = -pedantic -Wall -Werror -Wextra
+CXXFLAGS += -g3
+CXXFLAGS += -std=c++17
 
 CPPFLAGS = -DDEBUG
 CPPFLAGS = -I$(INCLUDES_DIR)
@@ -8,13 +11,10 @@ CPPFLAGS = -I$(INCLUDES_DIR)
 INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
 
-
-SOURCE := utest.cpp
-TARGET := utest
+OBJS = utest.o
+TARGET = utest
 
 all: $(TARGET)
-
-$(SOURCE) : classes_under_test.hpp $(INCLUDES_DIR)/mu_test.h
 
 check : $(TARGET)
 	@./$(TARGET) -v
@@ -22,11 +22,12 @@ check : $(TARGET)
 recheck: clean check
 
 clean:
-	@rm -f ./$(TARGET) *.o
+	@$(RM) ./$(TARGET) $(OBJS)
 
+utest.cpp : classes_under_test.hpp $(INCLUDES_DIR)/mu_test.h
 
 .PHONY : make clean check
 
 make:
-	@echo 'Attend a maker faire'
+	@echo 'Attend a maker faire next year! now back to coding...'
 	@${TRUE}
